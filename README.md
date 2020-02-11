@@ -28,9 +28,10 @@ The project is divided in three different sections:
    
 ### Installing:
 Clone this GIT repository:
-'''
+
+`
     https://github.com/amrhwanis22/DisasterResponse.git
-'''
+`
 
 ### Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
