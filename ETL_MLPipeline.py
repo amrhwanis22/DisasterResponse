@@ -24,9 +24,9 @@ import pickle
 nltk.download(['punkt', 'wordnet', 'averaged_perceptron_tagger'])
 pd.set_option('display.max_columns',None)
 
-class StartingVerbExtractor(BaseEstimator, TransformerMixin):
+class VerbExtractor(BaseEstimator, TransformerMixin):
 
-    def starting_verb(self, text):
+    def verb_extractor(self, text):
         sentence_list = nltk.sent_tokenize(text)
         for sentence in sentence_list:
             pos_tags = nltk.pos_tag(tokenize(sentence))
@@ -39,7 +39,7 @@ class StartingVerbExtractor(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, X):
-        X_tagged = pd.Series(X).apply(self.starting_verb)
+        X_tagged = pd.Series(X).apply(self.verb_extractor)
         return pd.DataFrame(X_tagged)
 def load_data(messages,categories):
     '''
@@ -139,7 +139,7 @@ def build_model():
             [   ('vect',CountVectorizer(tokenizer=tokenize)),
                 ('tfidf',TfidfTransformer())
             ])),
-            ('verb_extractor',StartingVerbExtractor())
+            ('verb_extractor',VerbExtractor())
         ]
         )),
         ('clf', MultiOutputClassifier(estimator=AdaBoostClassifier(),n_jobs=-1))
